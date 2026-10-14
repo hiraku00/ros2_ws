@@ -26,7 +26,11 @@ sim_robot ──distance (Float32)──→ brain
 |---|---|---|
 | `slow_distance`（既定 8.0）以上 | `FORWARD` | 1 歩 0.5 |
 | `turn_distance`（既定 3.0）以上 | `SLOW` | 1 歩 0.2 |
-| `turn_distance` 未満 | `TURN` | 向きを反転 |
+| `turn_distance` 未満（最初の 2 秒） | `STOP` | 停止 |
+| `turn_distance` 未満（2 秒経過後） | `TURN` | 向きを反転 |
+
+`STOP` を出し始めた時刻は brain が保持し、壁から離れる（`SLOW` / `FORWARD` に戻る）と破棄する。
+反対側の壁でも、再び 2 秒の `STOP` から始まる。
 
 brain を起動しない場合、sim_robot は初期値の `FORWARD` のまま壁へ突っ込んで止まる。
 
