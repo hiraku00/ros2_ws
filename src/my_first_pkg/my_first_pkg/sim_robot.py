@@ -1,4 +1,5 @@
 import rclpy
+import random
 from rclpy.node import Node
 from std_msgs.msg import Float32, String
 
@@ -29,7 +30,7 @@ class SimRobot(Node):
 
         dist = (TRACK - self.x) if self.heading == 1 else self.x
         msg = Float32()
-        msg.data = float(dist)
+        msg.data = float(dist) + random.uniform(-0.5, 0.5)  # センサノイズ
         self.pub.publish(msg)
 
         line = ['.'] * (TRACK + 1)
