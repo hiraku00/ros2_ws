@@ -66,7 +66,37 @@ ps -eo pid,args | grep "[l]ib/my_first_pkg"
 > **注意：`pkill -f my_first_pkg` は使わないでください。** コマンドの文字列にも `my_first_pkg` が含まれるため、
 > 自分自身やコンテナのシェルまで巻き込んで、コンテナが停止することがあります。
 
-## 4. ログの見方
+## 4. コードを書くときの落とし穴
+
+実際に書き間違えた例です。
+
+| 書き方 | 起きること | 正しくは |
+|---|---|---|
+| `x = (cond) ? a : b` | `SyntaxError`（`? :` は Python にない。C や JavaScript の書き方） | `x = a if cond else b` |
+| `on_distance` の先頭で `self.slowing = False` | メッセージのたびに `False` に戻り、状態を覚えられない | 覚えたい変数は `__init__` で 1 回だけ作る |
+| `if self.slowing is not None` | `True` / `False` は `None` ではないので、常に真になる | `if self.slowing` |
+| `self.stop_started = now` を、`None` のままにしてしまう | `None` と数値の引き算で `TypeError`、brain が落ちる | 初めて近づいたときに `now` を入れる |
+| 判断に使う値が、`msg.data` と `dist` で混ざる | 一部の判断だけ、ノイズに弱いまま | 判断に使う値は、1 つの変数に統一する |
+
+`is not None` は、**`None` かどうかで状態を表す変数**（`self.stop_started`）にだけ使います。
+
+### 書いたコードの構文だけを素早く確かめる
+
+```bash
+python3 -c "import ast; ast.parse(open('src/my_first_pkg/my_first_pkg/brain.py').read()); print('ok')"
+```
+
+文法の間違いは、これで分かります。ただし、「動きが正しいか」までは分かりません（上の `is not None` の例は、文法は正しい）。
+
+## 5. 実験の結果が、おかしいとき
+
+| 症状 | 原因 | 対処 |
+|---|---|---|
+| 同じ設定なのに、結果が 2 倍に混ざる | 同じトピックに、複数の `brain` が書いている | `ps -eo pid,lstart,args \| grep "[l]ib/my_first_pkg"` で、残っているプロセスを探し、PID を指定して `kill` する |
+| テスト用スクリプトの結果が、手動の結果と合わない | テストと手動のノードが、同じ通信グループにいる | テストは `ROS_DOMAIN_ID` を別の値にして、分ける（`tools/probe_brain_slow_band.py` は、そうしている） |
+| 確率の低い現象（約 18%）が、1 回の壁で出ない | 出なかっただけで、直ったとは限らない | 数百回まとめて試す（`tools/` のスクリプト）、または、対策の有無を並べて比べる |
+
+## 6. ログの見方
 
 ```
 |..............>..........................| 壁まで= 9.5  指示=FORWARD
@@ -80,7 +110,7 @@ ps -eo pid,args | grep "[l]ib/my_first_pkg"
 
 「壁まで」にはノイズが入っていないので、brain の判断（ノイズ込みの値）とは、少しずれて見えることがあります。
 
-## 5. 実験のしかた
+## 7. 実験のしかた
 
 | ポイント | 理由 |
 |---|---|

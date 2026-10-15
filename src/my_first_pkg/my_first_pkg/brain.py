@@ -8,6 +8,7 @@ class Brain(Node):
     def __init__(self):
         super().__init__('brain')
         self.stop_started = None
+        self.slowing = False
         self.history = deque(maxlen=5)
         self.declare_parameter('hysteresis', 1.0)
         self.declare_parameter('turn_distance', 3.0)
@@ -23,6 +24,7 @@ class Brain(Node):
         dist = sum(self.history) / len(self.history)
         hysteresis = self.get_parameter('hysteresis').value
         threshold = turn + hysteresis if self.stop_started is not None else turn
+        slow_threshold = slow + hysteresis if self.slowing else slow
         if dist < threshold:
             if self.stop_started is None:
                 self.stop_started = now
@@ -30,11 +32,13 @@ class Brain(Node):
                 cmd = 'TURN'
             else:
                 cmd = 'STOP'
-        elif dist < slow:
+        elif dist < slow_threshold:
             self.stop_started = None
+            self.slowing = True
             cmd = 'SLOW'
         else:
             self.stop_started = None
+            self.slowing = False
             cmd = 'FORWARD'
         out = String()
         out.data = cmd
