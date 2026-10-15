@@ -16,6 +16,7 @@ ROS 2 (Jazzy) の学習用ワークスペース。Apple Silicon の Mac 上で D
 | [02. 壁に向かって走るロボット](docs/02-robot-exercise.md) | sim_robot と brain の仕組み、6 つの実験 |
 | [03. ノイズ・チャタリング・フィルタ](docs/03-noise-and-filters.md) | 移動平均とヒステリシスの考え方、N と幅の選び方 |
 | [04. つまずきやすい点と対処](docs/04-troubleshooting.md) | よくあるエラー、「コードを変えたのに変わらない」の原因 |
+| [引き継ぎ書](docs/handoff.md) | 経緯、現状、次にやること（ステップ 2）、進め方。新しいセッションの開始点 |
 
 ## 構成
 
