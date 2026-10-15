@@ -22,3 +22,6 @@ secrets/
 .vscode/
 .idea/
 *.swp
+
+# 実行時の生成物（room_sim が書き出す SVG / HTML）
+output/

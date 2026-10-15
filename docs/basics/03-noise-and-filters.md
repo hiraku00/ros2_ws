@@ -281,8 +281,8 @@ N = 5 のままでは、平均がすでにノイズを抑えるので、差が�
 
 | ツール | 実行する場所 | 何を確かめるか |
 |---|---|---|
-| [tools/simulate_filters.py](../tools/simulate_filters.py) | Mac のターミナル（ROS 2 不要） | この文書の表の数字。`brain.py` の判断ロジックを再現して、数千回シミュレートする |
-| [tools/probe_brain_slow_band.py](../tools/probe_brain_slow_band.py) | コンテナの中（`source` 済み） | **本物の** `brain` が、SLOW の出る線（9.0）で、揺れを止めるか |
+| [tools/simulate_filters.py](../../tools/simulate_filters.py) | Mac のターミナル（ROS 2 不要） | この文書の表の数字。`brain.py` の判断ロジックを再現して、数千回シミュレートする |
+| [tools/probe_brain_slow_band.py](../../tools/probe_brain_slow_band.py) | コンテナの中（`source` 済み） | **本物の** `brain` が、SLOW の出る線（9.0）で、揺れを止めるか |
 
 ```bash
 python3 tools/simulate_filters.py          # Mac で

@@ -13,9 +13,9 @@
 |---|---|
 | 何をしているか | ROS 2 (Jazzy) の学習。Mac（Apple Silicon）の Docker コンテナ内で動かす |
 | 学習者 | ROS 2 初心者。説明は日本語で、中学生が分かるレベルを求めている |
-| 済んだこと | ノード・トピック・パラメータの基本、壁に向かって走るロボットの制御（`sim_robot` + `brain`）、ノイズ、移動平均、ヒステリシス（STOP と SLOW の 2 境界） |
-| いまの状態 | `main` にすべてマージ済み。作業中の変更なし。PR は #1〜#4 がマージ済み |
-| 次にやること | **ステップ 2: 2D 部屋の掃除ロボット**（本物と同じ `/scan`・`/cmd_vel` の型）。詳細は [5 章](#5-これからやること-ステップ-2-2d-部屋の掃除ロボット) |
+| 済んだこと | ノード・トピック・パラメータの基本、壁に向かって走るロボットの制御（`sim_robot` + `brain`）、ノイズ、移動平均、ヒステリシス（STOP と SLOW の 2 境界）、ステップ 2 のフェーズ 0〜1（`room_sim`、`/scan`・`/cmd_vel` の読み書きと実験） |
+| いまの状態 | ステップ 2 の**フェーズ 0〜1 が完了**（`room_robot_pkg` と `room_sim`。`feature/room-robot` ブランチ。マージ状況は `git log` で確認）。入門編の PR は #1〜#5 がマージ済み |
+| 次にやること | **ステップ 2 のフェーズ 2: 学習者が `avoider` を書く**（`/scan` を読んで、`/cmd_vel` を出す）。詳細は [5 章](#5-これからやること-ステップ-2-2d-部屋の掃除ロボット) |
 | 進め方 | 学習者が自分でコードを書き、Claude がレビューする（[3 章](#3-学習者との進め方)） |
 | 最初に確認すること | [7 章](#7-新しいセッションの最初の手順)のコマンドで、Docker とコンテナの状態を見る |
 
@@ -151,6 +151,7 @@ ros2 run my_first_pkg brain
 | 数字の裏付け | 説明に使う数字は、模擬実験や実測で出す。確率が低い現象は、1 回で判断しない |
 | 訂正 | 間違いや、言い過ぎに気づいたら、すぐ認めて訂正する（例:「STOP の位置は変わらない」を「始める位置は変わらないが、最接近は変わる」に訂正した） |
 | 一度に出す量 | お題は 1 つずつ。長すぎる返信にしない |
+| 新しい概念の出し方 | 問題に使う前に、**何のためか・どういう条件で起きるか・単位**を説明する（例: 「回転」を説明なしに出して、「なぜ回転が出てくるのか」と指摘された。`x=0.5` を「0.5 m ずつ」と読み違えたのも、速さと距離の説明が先になかったため）。学習者の「なぜ？」は、理解の入口なので、先に答える |
 | 破壊的な操作 | コンテナの停止・削除、プロセスの強制終了は、事前に説明する |
 
 ---
@@ -238,15 +239,15 @@ Co-Authored-By: Claude <使用中のモデル名> <noreply@anthropic.com>
 | リポジトリ | **分けない**。同じ `ros2_ws` に、新しいパッケージを足す |
 | パッケージ名 | `room_robot_pkg`（`src/room_robot_pkg/`）。`my_first_pkg` は、そのまま残す（壊さない） |
 | ブランチ | `feature/room-robot`（フェーズごとに細かく切ってもよい） |
-| ドキュメント | `docs/05-...` から番号を続ける。README の目次に「入門編」「ステップ 2」を並べる |
+| ドキュメント | **フォルダを分ける**。入門編は `docs/basics/`（01〜04）、ステップ 2 は `docs/room-robot/`（01〜）。README の目次に「入門編」「ステップ 2」を並べた |
 | 進め方 | [3 章](#3-学習者との進め方)のとおり（学習者が書く部分と、Claude が用意する部分を分ける） |
 
-### 5.3 決まっていないこと（最初に学習者へ確認する）
+### 5.3 決まったこと（学習者に確認済み）
 
 | 項目 | 選択肢 | おすすめ |
 |---|---|---|
-| ブラウザでの見せ方 | **A**: ロボットが SVG（または PNG）を毎秒書き出し、HTML を自動更新で開く / **B**: コンテナ内に Web サーバーを立て、ポート転送で見る | **A**。フォルダが Mac と共有されているので、**書き出したファイルは Mac 側にすぐ出る**。Docker のポート設定が不要 |
-| 画像の形式 | SVG（文字ファイル。追加ライブラリ不要）/ PNG（`matplotlib` か `Pillow` が必要） | SVG（コンテナに `apt install` しなくて済む。`apt` で入れたものは、コンテナを消すと失われる） |
+| ブラウザでの見せ方 | **A: 決定。** ロボットが SVG（または PNG）を毎秒書き出し、HTML を自動更新で開く / B: コンテナ内に Web サーバーを立て、ポート転送で見る（不採用） | **A**。フォルダが Mac と共有されているので、**書き出したファイルは Mac 側にすぐ出る**。Docker のポート設定が不要 |
+| 画像の形式 | **SVG: 決定。** SVG（文字ファイル。追加ライブラリ不要）/ PNG（`matplotlib` か `Pillow` が必要。不採用） | SVG（コンテナに `apt install` しなくて済む。`apt` で入れたものは、コンテナを消すと失われる） |
 
 ### 5.4 構成（案）
 
@@ -265,9 +266,9 @@ room_sim ──/scan (LaserScan)──→ avoider ──/cmd_vel (Twist)──�
 
 | フェーズ | 内容 | 担当 | 学べること |
 |---|---|---|---|
-| 0. 準備 | `room_robot_pkg` の作成（`ros2 pkg create`）、`setup.py`・`package.xml`（`sensor_msgs`、`geometry_msgs` の依存）、`.gitignore` に `output/` | Claude（手順は説明する） | パッケージ構成、依存の宣言 |
-| 1. 世界と表示 | `room_sim`。固定の部屋、壁と障害物、ロボットの位置、SVG の書き出し。最初は `/cmd_vel` を手で送って動かす（`ros2 topic pub`） | Claude が作り、学習者が動かして確認 | `Twist`、`LaserScan` のフィールド（`ranges`、`angle_min`、`angle_increment`、`range_max`） |
-| 2. 避けるだけ | `avoider`。`/scan` の前方の最小距離が近ければ曲がる、遠ければ進む | **学習者** | `LaserScan` の配列の扱い、サブスクライバと `Twist` の発行 |
+| 0. 準備 ✅ | `room_robot_pkg` の作成（`ros2 pkg create`）、`setup.py`・`package.xml`（`sensor_msgs`、`geometry_msgs` の依存）、`.gitignore` に `output/` | Claude（手順は説明する） | パッケージ構成、依存の宣言 |
+| 1. 世界と表示 ✅ | `room_sim`。固定の部屋、壁と障害物、ロボットの位置、SVG の書き出し。最初は `/cmd_vel` を手で送って動かす（`ros2 topic pub`） | Claude が作り、学習者が動かして確認 | `Twist`、`LaserScan` のフィールド（`ranges`、`angle_min`、`angle_increment`、`range_max`） |
+| 2. 避けるだけ（**次**） | `avoider`。`/scan` の前方の最小距離が近ければ曲がる、遠ければ進む | **学習者** | `LaserScan` の配列の扱い、サブスクライバと `Twist` の発行 |
 | 3. ノイズとフィルタ | `/scan` にノイズを足す。前方を**扇形に切り出して、最小値や平均を取る**（移動平均・中央値）。外れ値（`inf`、範囲外）の扱い | **学習者** | 配列のフィルタ、`inf` の処理、**チャタリングが 2D でも起きる**こと |
 | 4. ヒステリシス | 「避けモード」に入る線と出る線をずらす（`avoiding` 状態変数）。`hysteresis` をパラメータ化 | **学習者** | 今日の学びの再適用 |
 | 5. launch ファイル | 2〜3 つのタブで起動していたものを、1 コマンドで起動する | 学習者と Claude で | `launch.py`、パラメータの渡し方 |
@@ -297,7 +298,7 @@ room_sim ──/scan (LaserScan)──→ avoider ──/cmd_vel (Twist)──�
 - 部屋の中を、障害物に当たらず、走り続けられる
 - `/scan` にノイズを足しても、避けモードの出入りが揺れない
 - 起動が 1 コマンドで済み、ブラウザで動きが見える
-- `docs/05-...` に、図・表つきで、構成と手順が書かれている
+- `docs/room-robot/` に、図・表つきで、構成と手順が書かれている（01〜04 はフェーズ 1 まで。以降は、フェーズごとに足す）
 - すべて `main` にマージされている
 
 ---
@@ -343,8 +344,8 @@ docker exec ros2 bash -c 'source /opt/ros/jazzy/setup.bash && source /root/ros2_
 ### 7.3 学習者に伝えること
 
 1. 前回までの内容を、短く要約する（[0 章](#0-3分で把握する)）
-2. **[5.3 章](#53-決まっていないこと最初に学習者へ確認する)の 2 点（見せ方、画像の形式）を確認する**
-3. 合意したら、フェーズ 0（パッケージ作成）から始める
+2. フェーズ 2（`avoider`）の予想問題を出す（[5.7 章](#57-先に学習者へ聞く予想問題例)）
+3. 学習者が `avoider` を書き、Claude がレビューする（答えを先に書かない）
 
 ### 7.4 新しいセッションの最初のメッセージ（例）
 
@@ -357,9 +358,22 @@ docker exec ros2 bash -c 'source /opt/ros/jazzy/setup.bash && source /root/ros2_
 | 文書 | 内容 |
 |---|---|
 | [README.md](../README.md) | 入口。構成、パラメータ表、実行手順 |
-| [01-ros2-basics.md](01-ros2-basics.md) | ノード・トピック・パラメータ、用語集 |
-| [02-robot-exercise.md](02-robot-exercise.md) | `sim_robot` と `brain` の仕組み、6 つの実験 |
-| [03-noise-and-filters.md](03-noise-and-filters.md) | ノイズ、チャタリング、移動平均、ヒステリシス（実測値つき） |
-| [04-troubleshooting.md](04-troubleshooting.md) | エラーと対処、コードの落とし穴 |
+**入門編（`docs/basics/`）**
+
+| 文書 | 内容 |
+|---|---|
+| [01-ros2-basics.md](basics/01-ros2-basics.md) | ノード・トピック・パラメータ、用語集 |
+| [02-robot-exercise.md](basics/02-robot-exercise.md) | `sim_robot` と `brain` の仕組み、6 つの実験 |
+| [03-noise-and-filters.md](basics/03-noise-and-filters.md) | ノイズ、チャタリング、移動平均、ヒステリシス（実測値つき） |
+| [04-troubleshooting.md](basics/04-troubleshooting.md) | エラーと対処、コードの落とし穴 |
+
+**ステップ 2（`docs/room-robot/`）**
+
+| 文書 | 内容 |
+|---|---|
+| [01-lidar-and-twist.md](room-robot/01-lidar-and-twist.md) | 目的、`/scan`（LaserScan）、`/cmd_vel`（Twist）、フェーズ一覧 |
+| [02-room-sim.md](room-robot/02-room-sim.md) | `room_sim` の仕組み、図の見かた、パラメータ |
+| [03-experiments.md](room-robot/03-experiments.md) | フェーズ 1 の実験の記録（予想 → 実測 → 理由） |
+| [04-troubleshooting.md](room-robot/04-troubleshooting.md) | ステップ 2 のつまずきと対処 |
 
 過去のリポジトリ（コミット書式の参考）: `~/Practice/auto-daily-report`、`~/Practice/bing検索`、`~/Practice/connect-proton`
