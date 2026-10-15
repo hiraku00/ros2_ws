@@ -28,8 +28,8 @@ talker ──── my_topic ────→ listener
 
 | ノード | 役割 | コード |
 |---|---|---|
-| talker | `my_topic` に、1 秒ごとに文字を送る | [talker.py](../src/my_first_pkg/my_first_pkg/talker.py) |
-| listener | `my_topic` に文字が届いたら表示する | [listener.py](../src/my_first_pkg/my_first_pkg/listener.py) |
+| talker | `my_topic` に、1 秒ごとに文字を送る | [talker.py](../../src/my_first_pkg/my_first_pkg/talker.py) |
+| listener | `my_topic` に文字が届いたら表示する | [listener.py](../../src/my_first_pkg/my_first_pkg/listener.py) |
 
 これだけでは地味ですが、**中身を入れ替えるとロボットになります**。
 

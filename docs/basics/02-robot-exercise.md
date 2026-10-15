@@ -7,8 +7,8 @@
 
 | ノード | たとえ | 仕事 | コード |
 |---|---|---|---|
-| `sim_robot` | 体 | 40 マスの廊下を走る。壁までの距離を測って知らせ、指示どおりに動く | [sim_robot.py](../src/my_first_pkg/my_first_pkg/sim_robot.py) |
-| `brain` | 頭脳 | 壁までの距離を見て、「どう動くか」を決めて知らせる | [brain.py](../src/my_first_pkg/my_first_pkg/brain.py) |
+| `sim_robot` | 体 | 40 マスの廊下を走る。壁までの距離を測って知らせ、指示どおりに動く | [sim_robot.py](../../src/my_first_pkg/my_first_pkg/sim_robot.py) |
+| `brain` | 頭脳 | 壁までの距離を見て、「どう動くか」を決めて知らせる | [brain.py](../../src/my_first_pkg/my_first_pkg/brain.py) |
 
 | トピック | 流れる向き | 中身 |
 |---|---|---|
@@ -57,7 +57,7 @@ sim_robot ──── distance（壁までの距離）────→ brain
 
 ## 3. 動かし方
 
-[README](../README.md#実行方法) の手順でコンテナに入り、ターミナルを 2 つ使います。
+[README](../../README.md#実行方法) の手順でコンテナに入り、ターミナルを 2 つ使います。
 
 ```bash
 # タブ1: ロボット（体）
