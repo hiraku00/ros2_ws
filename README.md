@@ -26,7 +26,8 @@ src/my_first_pkg/my_first_pkg/
 ├── sim_robot.py  # 仮想ロボット（体）: ノイズ入りの distance を送り、cmd に従って動く
 └── brain.py      # 頭脳: distance を移動平均して、FORWARD / SLOW / STOP / TURN を cmd に送る
 tools/
-└── simulate_filters.py   # ノイズ対策の効果を ROS 2 なしで数値化する
+├── simulate_filters.py          # ノイズ対策の効果を ROS 2 なしで数値化する（Mac で実行）
+└── probe_brain_slow_band.py     # 本物の brain に距離を直接送り、SLOW の境界の揺れを確かめる（コンテナ内）
 docs/                     # 解説ドキュメント
 ```
 
@@ -43,7 +44,7 @@ sim_robot ──distance (Float32)──→ brain
 |---|---|---|
 | `slow_distance` | 8.0 | これ未満で `SLOW`（減速）に入る |
 | `turn_distance` | 3.0 | これ未満で `STOP`（2 秒）→ `TURN` に入る |
-| `hysteresis` | 1.0 | STOP から抜ける線を `turn_distance` からどれだけ遠くに置くか（[詳細](docs/03-noise-and-filters.md#4-対策2-ヒステリシス)） |
+| `hysteresis` | 1.0 | `STOP` と `SLOW` の「出る線」を、「入る線」からどれだけ遠くに置くか。3.0→4.0、8.0→9.0（[詳細](docs/03-noise-and-filters.md#4-対策2-ヒステリシス)） |
 
 移動平均の個数 `N` は、`brain.py` の `deque(maxlen=5)` で指定する。
 
@@ -92,10 +93,11 @@ ros2 topic echo /cmd                       # 頭脳の指示を直接見る
 ros2 topic pub /cmd std_msgs/msg/String "{data: TURN}" --once   # 人間が頭脳の代わりをする
 ```
 
-### ノイズ対策の効果を数値で確かめる（ROS 2 不要）
+### ノイズ対策の効果を数値で確かめる
 
 ```bash
-python3 tools/simulate_filters.py
+python3 tools/simulate_filters.py          # Mac で。ROS 2 不要
+python3 tools/probe_brain_slow_band.py     # コンテナの中で。本物の brain を検証する
 ```
 
 ## 本物のロボットとの対応
