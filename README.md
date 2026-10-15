@@ -1,55 +1,51 @@
 # ros2_ws
 
 ROS 2 (Jazzy) の学習用ワークスペース。Apple Silicon の Mac 上で Docker コンテナ内に ROS 2 を動かし、
-ノード間通信（トピック）の基本と、センサー → 判断 → 動作の制御ループを体験する。
+ノード間通信（トピック）の基本と、**センサー → 判断 → 動作**の制御ループを体験する。
+
+壁に向かって走る仮想ロボットを、頭脳ノード（`brain`）で制御する演習を通して、
+センサーノイズ・チャタリング・移動平均・ヒステリシスまでを、実測の数字つきで学べる。
+
+## ドキュメント
+
+初めての人は、上から順に読む。
+
+| 文書 | 内容 |
+|---|---|
+| [01. ROS 2 の基本](docs/01-ros2-basics.md) | ノード・トピック・パラメータ、なぜ Docker を使うのか、用語集 |
+| [02. 壁に向かって走るロボット](docs/02-robot-exercise.md) | sim_robot と brain の仕組み、6 つの実験 |
+| [03. ノイズ・チャタリング・フィルタ](docs/03-noise-and-filters.md) | 移動平均とヒステリシスの考え方、N と幅の選び方 |
+| [04. つまずきやすい点と対処](docs/04-troubleshooting.md) | よくあるエラー、「コードを変えたのに変わらない」の原因 |
 
 ## 構成
 
 ```
 src/my_first_pkg/my_first_pkg/
-├── talker.py     # my_topic に文字列を1秒ごとに送る
+├── talker.py     # my_topic に文字列を 1 秒ごとに送る
 ├── listener.py   # my_topic を受け取って表示する
-├── sim_robot.py  # 仮想ロボット（体）: distance を送り、cmd に従って動く
-└── brain.py      # 頭脳: distance を見て FORWARD / SLOW / TURN を cmd に送る
+├── sim_robot.py  # 仮想ロボット（体）: ノイズ入りの distance を送り、cmd に従って動く
+└── brain.py      # 頭脳: distance を移動平均して、FORWARD / SLOW / STOP / TURN を cmd に送る
+tools/
+└── simulate_filters.py   # ノイズ対策の効果を ROS 2 なしで数値化する
+docs/                     # 解説ドキュメント
 ```
-
-### 壁に向かって走るロボットの演習
-
-2 つのノードが 2 本のトピックで輪になってつながる。互いの存在は知らず、トピック名だけで通信する。
 
 ```
 sim_robot ──distance (Float32)──→ brain
           ←──cmd (String)───────
 ```
 
-| 壁までの距離 | brain の指示 | sim_robot の動き |
+## brain のパラメータ
+
+実行中に `ros2 param set /brain <名前> <値>` で変更できる（再起動すると初期値に戻る）。
+
+| 名前 | 初期値 | 意味 |
 |---|---|---|
-| `slow_distance`（既定 8.0）以上 | `FORWARD` | 1 歩 0.5 |
-| `turn_distance`（既定 3.0）以上 | `SLOW` | 1 歩 0.2 |
-| `turn_distance` 未満（最初の 2 秒） | `STOP` | 停止 |
-| `turn_distance` 未満（2 秒経過後） | `TURN` | 向きを反転 |
+| `slow_distance` | 8.0 | これ未満で `SLOW`（減速）に入る |
+| `turn_distance` | 3.0 | これ未満で `STOP`（2 秒）→ `TURN` に入る |
+| `hysteresis` | 1.0 | STOP から抜ける線を `turn_distance` からどれだけ遠くに置くか（[詳細](docs/03-noise-and-filters.md#4-対策2-ヒステリシス)） |
 
-`STOP` を出し始めた時刻は brain が保持し、壁から離れる（`SLOW` / `FORWARD` に戻る）と破棄する。
-反対側の壁でも、再び 2 秒の `STOP` から始まる。
-
-brain を起動しない場合、sim_robot は初期値の `FORWARD` のまま壁へ突っ込んで止まる。
-
-### センサーノイズと移動平均フィルタ
-
-`sim_robot` は、`distance` に ±0.5 の一様ノイズを加えて送信する（画面の「壁まで」は真の値）。
-判断の境界（`turn_distance`）付近で測定値が揺れると、`STOP` と `SLOW` が短い間隔で入れ替わり、
-STOP の 2 秒タイマーも毎回リセットされる（チャタリング）。
-
-`brain` は、直近 `N` 個の測定値の平均で判断する（`N = 5`）。ただし平均は過去の値を含むため、
-接近中は実際より壁が遠いと誤認し、停止が遅れる。
-
-| N | STOP が始まった壁までの距離（真値） | 傾向 |
-|---|---|---|
-| 1（平均なし） | 約 2.7 | チャタリングが発生する |
-| 5 | 約 2.6 | チャタリングが解消し、遅れも小さい |
-| 20 | 約 0.4 | 壁の直前まで進み、安全余裕がほぼない |
-
-フィルタを強くするほどノイズは減るが、反応は遅れる。速度と許容できる安全距離から N を決める。
+移動平均の個数 `N` は、`brain.py` の `deque(maxlen=5)` で指定する。
 
 ## 実行方法
 
@@ -61,18 +57,19 @@ docker run -it --name ros2 --platform linux/arm64 \
   -v ~/Practice/ros2_ws:/root/ros2_ws ros:jazzy
 ```
 
-2 回目以降は `docker start ros2` の後、`docker exec -it ros2 bash` で入る。
+2 回目以降は、`docker start ros2` の後に `docker exec -it ros2 bash` で入る。
+Docker Desktop が起動していないとエラーになる（[対処](docs/04-troubleshooting.md)）。
 
 ### 2. ビルド（コンテナ内）
 
 ```bash
 source /opt/ros/jazzy/setup.bash
 cd /root/ros2_ws
-colcon build --packages-select my_first_pkg
+colcon build --symlink-install --packages-select my_first_pkg
 source install/setup.bash
 ```
 
-### 3. 実行（ターミナルを 2 つ使い、それぞれ `docker exec -it ros2 bash` で入って `source` する）
+### 3. 実行（ターミナルを 2 つ。どちらも `docker exec -it ros2 bash` で入って `source` する）
 
 ```bash
 # タブ1
@@ -81,14 +78,24 @@ ros2 run my_first_pkg sim_robot
 ros2 run my_first_pkg brain
 ```
 
+壁の手前で `SLOW` → `STOP`（約 2 秒）→ `TURN` となり、廊下を往復する。
 終了時は両方で Ctrl+C を押す。プロセスが残ると、次回の実行に干渉する。
+
+コードを変えたら、**変えたノードを再起動する**（保存しただけでは、動いているノードに反映されない）。
 
 ### 実験
 
 ```bash
 ros2 param set /brain turn_distance 10.0   # 実行中に頭脳の性格を変える
+ros2 param set /brain hysteresis 0.0       # ヒステリシスを切る（効果は maxlen=1 で見やすい）
 ros2 topic echo /cmd                       # 頭脳の指示を直接見る
 ros2 topic pub /cmd std_msgs/msg/String "{data: TURN}" --once   # 人間が頭脳の代わりをする
+```
+
+### ノイズ対策の効果を数値で確かめる（ROS 2 不要）
+
+```bash
+python3 tools/simulate_filters.py
 ```
 
 ## 本物のロボットとの対応

@@ -9,6 +9,7 @@ class Brain(Node):
         super().__init__('brain')
         self.stop_started = None
         self.history = deque(maxlen=5)
+        self.declare_parameter('hysteresis', 1.0)
         self.declare_parameter('turn_distance', 3.0)
         self.declare_parameter('slow_distance', 8.0)
         self.pub = self.create_publisher(String, 'cmd', 10)
@@ -20,7 +21,9 @@ class Brain(Node):
         slow = self.get_parameter('slow_distance').value
         self.history.append(msg.data)
         dist = sum(self.history) / len(self.history)
-        if dist < turn:
+        hysteresis = self.get_parameter('hysteresis').value
+        threshold = turn + hysteresis if self.stop_started is not None else turn
+        if dist < threshold:
             if self.stop_started is None:
                 self.stop_started = now
             if now - self.stop_started > 2.0:
