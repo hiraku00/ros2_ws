@@ -1,5 +1,6 @@
-import rclpy
 from collections import deque
+
+import rclpy
 from rclpy.node import Node
 from std_msgs.msg import Float32, String
 
