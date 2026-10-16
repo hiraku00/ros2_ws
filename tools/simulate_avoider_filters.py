@@ -8,13 +8,13 @@ rclpy などは、使わないので、空の部品に差し替えて、import �
     python3 tools/simulate_avoider_filters.py --trials 20 --seconds 40
 """
 import argparse
+from collections import deque
 import math
+from pathlib import Path
 import random
 import statistics
 import sys
 import types
-from collections import deque
-from pathlib import Path
 
 for name in ('rclpy', 'rclpy.node', 'rclpy.executors', 'geometry_msgs',
              'geometry_msgs.msg', 'sensor_msgs', 'sensor_msgs.msg'):
@@ -31,8 +31,11 @@ DT = 0.1
 THRESHOLD = 1.5
 
 
-def run(mode, n, noise, seed, seconds):
-    """1 回ぶんの走行。mode: 'min'（最小値の移動平均。n=1 なら平均なし）か 'avg'（61 本の平均）。"""
+def run(mode, n, noise, seed, seconds, trace=None):
+    """1 回ぶんの走行。mode: 'min'（最小値の移動平均。n=1 なら平均なし）か 'avg'（61 本の平均）。
+
+    trace にリストを渡すと、0.1 秒ごとの (時刻, x, y, 回っているか) を追加する（図を作るため）。
+    """
     rnd = random.Random(seed)
     history = deque(maxlen=n)
     x, y, theta = 10.0, 10.0, 0.0
@@ -50,6 +53,8 @@ def run(mode, n, noise, seed, seconds):
         else:
             nearest = sum(front) / len(front)
         turning = nearest < THRESHOLD
+        if trace is not None:
+            trace.append((t, x, y, turning))
         if turning and not previous:
             starts += 1
             if first_x is None:
@@ -84,11 +89,13 @@ def main():
           '回り始めた回数（平均） | 本当の最近接（最小）')
     for label, mode, n, noise, trials in cases:
         results = [run(mode, n, noise, seed, args.seconds) for seed in range(trials)]
-        xs = [r[0] for r in results]
+        xs = [r[0] for r in results if r[0] is not None]  # 時間内に一度も回らなかった回は除く
         starts = [r[1] for r in results]
         closest = [r[2] for r in results]
+        first = (f'{statistics.mean(xs):.2f} / {min(xs):.2f}〜{max(xs):.2f}' if xs
+                 else '（時間内に回らなかった）')
         print(f'{label:<14} {n:>3}  {noise:>4} {trials:>4} | '
-              f'{statistics.mean(xs):.2f} / {min(xs):.2f}〜{max(xs):.2f}'
+              f'{first}'
               f'            | {statistics.mean(starts):>6.1f}'
               f'               | {min(closest):.2f}')
 
