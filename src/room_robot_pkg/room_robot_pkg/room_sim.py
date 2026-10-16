@@ -258,6 +258,9 @@ def main(args=None):
         rclpy.spin(node)
     except (KeyboardInterrupt, ExternalShutdownException):
         pass
+    except Exception:
+        if rclpy.ok():  # Ctrl+C の終了処理の途中で出る RCLError だけを、無視する
+            raise
     finally:
         node.destroy_node()
         rclpy.try_shutdown()
