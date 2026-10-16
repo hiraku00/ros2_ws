@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="269.041655pt" height="230.160375pt" viewBox="0 0 269.041655 230.160375" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.9.2, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 230.160375 
+L 269.041655 230.160375 
+L 269.041655 0 
+L 0 0 
+z
+" style="fill: #fcfcfb"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 166.774521 205.754858 
+C 179.458412 183.785713 186.137379 158.859469 186.137379 133.491685 
+C 186.137379 108.123902 179.458412 83.197658 166.774521 61.228513 
+L 41.611034 133.491685 
+z
+" clip-path="url(#p9f86bcf288)" style="fill: #2a78d6; opacity: 0.12; stroke: #2a78d6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 41.611034 154.138306 
+C 47.086582 154.138306 52.338603 151.962848 56.2104 148.091051 
+C 60.082197 144.219254 62.257655 138.967233 62.257655 133.491685 
+C 62.257655 128.016138 60.082197 122.764117 56.2104 118.89232 
+C 52.338603 115.020523 47.086582 112.845065 41.611034 112.845065 
+C 36.135487 112.845065 30.883466 115.020523 27.011669 118.89232 
+C 23.139872 122.764117 20.964414 128.016138 20.964414 133.491685 
+C 20.964414 138.967233 23.139872 144.219254 27.011669 148.091051 
+C 30.883466 151.962848 36.135487 154.138306 41.611034 154.138306 
+z
+" clip-path="url(#p9f86bcf288)" style="fill: #2a78d6; stroke: #2a78d6; stroke-linejoin: miter"/>
+   </g>
+   <g id="line2d_1">
+    <path d="M 41.611034 112.845065 
+L 144.844138 112.845065 
+" clip-path="url(#p9f86bcf288)" style="fill: none; stroke-dasharray: 1,1.65; stroke-dashoffset: 0; stroke: #52514e"/>
+   </g>
+   <g id="line2d_2">
+    <path d="M 41.611034 154.138306 
+L 144.844138 154.138306 
+" clip-path="url(#p9f86bcf288)" style="fill: none; stroke-dasharray: 1,1.65; stroke-dashoffset: 0; stroke: #52514e"/>
+   </g>
+   <g id="line2d_3">
+    <path d="M 41.611034 133.491685 
+L 144.844138 112.845065 
+" clip-path="url(#p9f86bcf288)" style="fill: none; stroke: #eb6834; stroke-width: 2; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_4">
+    <path d="M 41.611034 133.491685 
+L 144.844138 154.138306 
+" clip-path="url(#p9f86bcf288)" style="fill: none; stroke: #eb6834; stroke-width: 2; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_5">
+    <path d="M 144.844138 154.138306 
+L 144.844138 112.845065 
+" clip-path="url(#p9f86bcf288)" style="fill: none; stroke: #0b0b0b; stroke-linecap: square"/>
+   </g>
+   <g id="text_1">
+    <text style="fill: #0b0b0b; font: 9.5px 'Hiragino Sans', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif" transform="translate(148.285241 125.443701)">1.5 m 先で、</text>
+    <text style="fill: #0b0b0b; font: 9.5px 'Hiragino Sans', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif" transform="translate(148.285241 136.179888)">ロボットの幅（0.6 m）が</text>
+    <text style="fill: #0b0b0b; font: 9.5px 'Hiragino Sans', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif" transform="translate(148.285241 146.916076)">通る所</text>
+   </g>
+   <g id="text_2">
+    <text style="fill: #0b0b0b; font: 700 11px 'Hiragino Sans', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle" x="93.227586" y="105.039612" transform="rotate(-0 93.227586 105.039612)">左右に 約 11° ずつ</text>
+   </g>
+   <g id="text_3">
+    <text style="fill: #52514e; font: 9.5px 'Hiragino Sans', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif" transform="translate(127.825807 43.610119)">見ている範囲 ±30°</text>
+    <text style="fill: #52514e; font: 9.5px 'Hiragino Sans', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif" transform="translate(111.980104 54.346306)">（11° に、余裕を足した）</text>
+   </g>
+   <g id="text_4">
+    <text style="fill: #0b0b0b; font: 13.2px 'Hiragino Sans', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle" x="134.520828" y="17.376375" transform="rotate(-0 134.520828 17.376375)">前方を、何度まで見ればよいか</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p9f86bcf288">
+   <rect x="7.2" y="23.376375" width="254.641655" height="199.584"/>
+  </clipPath>
+ </defs>
+</svg>

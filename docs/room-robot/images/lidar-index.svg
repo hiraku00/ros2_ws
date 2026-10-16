@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="380.628599pt" height="310.730858pt" viewBox="0 0 380.628599 310.730858" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.9.2, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 310.730858 
+L 380.628599 310.730858 
+L 380.628599 0 
+L 0 0 
+z
+" style="fill: #fcfcfb"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 261.714114 208.093616 
+C 270.360043 193.118428 274.912737 176.127544 274.912737 158.835685 
+C 274.912737 141.543827 270.360043 124.552943 261.714114 109.577754 
+L 176.396875 158.835685 
+z
+" clip-path="url(#pf51271463c)" style="fill: #2a78d6; opacity: 0.15; stroke: #2a78d6; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 243.759822 144.557524 
+Q 235.016097 100.218453 191.775261 91.689744 
+" clip-path="url(#pf51271463c)" style="fill: none; stroke: #9b9a95; stroke-linecap: round"/>
+    <path d="M 196.727586 95.520471 
+L 191.775261 91.689744 
+L 197.811238 90.02632 
+z
+" clip-path="url(#pf51271463c)" style="fill: #9b9a95; stroke: #9b9a95; stroke-linecap: round"/>
+   </g>
+   <g id="line2d_1">
+    <path d="M 176.396875 158.835685 
+L 274.912737 158.835685 
+" clip-path="url(#pf51271463c)" style="fill: none; stroke: #52514e; stroke-width: 1.2; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_2">
+    <path d="M 176.396875 158.835685 
+L 261.714114 109.577754 
+" clip-path="url(#pf51271463c)" style="fill: none; stroke: #52514e; stroke-width: 1.2; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_3">
+    <path d="M 176.396875 158.835685 
+L 176.396875 60.319823 
+" clip-path="url(#pf51271463c)" style="fill: none; stroke: #52514e; stroke-width: 1.2; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_4">
+    <path d="M 176.396875 158.835685 
+L 77.881013 158.835685 
+" clip-path="url(#pf51271463c)" style="fill: none; stroke: #52514e; stroke-width: 1.2; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_5">
+    <path d="M 176.396875 158.835685 
+L 176.396875 257.351547 
+" clip-path="url(#pf51271463c)" style="fill: none; stroke: #52514e; stroke-width: 1.2; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_6">
+    <path d="M 176.396875 158.835685 
+L 261.714114 208.093616 
+" clip-path="url(#pf51271463c)" style="fill: none; stroke: #52514e; stroke-width: 1.2; stroke-linecap: square"/>
+   </g>
+   <g id="text_1">
+    <text style="fill: #0b0b0b; font: 10px 'Hiragino Sans', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif" transform="translate(279.530668 156.074904)">ranges[0]</text>
+    <text style="fill: #0b0b0b; font: 10px 'Hiragino Sans', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif" transform="translate(279.530668 167.396467)">正面（0°）</text>
+   </g>
+   <g id="text_2">
+    <text style="fill: #0b0b0b; font: 10px 'Hiragino Sans', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif" transform="translate(265.71336 93.897226)">ranges[30]</text>
+    <text style="fill: #0b0b0b; font: 10px 'Hiragino Sans', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif" transform="translate(265.71336 105.218789)">左に 30°</text>
+   </g>
+   <g id="text_3">
+    <text style="fill: #0b0b0b; font: 10px 'Hiragino Sans', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif" transform="translate(148.632031 42.33033)">ranges[90]</text>
+    <text style="fill: #0b0b0b; font: 10px 'Hiragino Sans', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif" transform="translate(153.1125 53.651892)">左（90°）</text>
+   </g>
+   <g id="text_4">
+    <text style="fill: #0b0b0b; font: 10px 'Hiragino Sans', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif" transform="translate(11.003707 156.089748)">ranges[180]</text>
+    <text style="fill: #0b0b0b; font: 10px 'Hiragino Sans', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif" transform="translate(9.964644 167.41131)">後ろ（180°）</text>
+   </g>
+   <g id="text_5">
+    <text style="fill: #0b0b0b; font: 10px 'Hiragino Sans', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif" transform="translate(145.267187 269.828853)">ranges[270]</text>
+    <text style="fill: #0b0b0b; font: 10px 'Hiragino Sans', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif" transform="translate(149.747656 281.150416)">右（270°）</text>
+   </g>
+   <g id="text_6">
+    <text style="fill: #0b0b0b; font: 10px 'Hiragino Sans', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif" transform="translate(265.71336 218.282269)">ranges[330]</text>
+    <text style="fill: #0b0b0b; font: 10px 'Hiragino Sans', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif" transform="translate(265.71336 229.603832)">右に 30°（= 330°）</text>
+   </g>
+   <g id="text_7">
+    <text style="fill: #52514e; font: 9px 'Hiragino Sans', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif" transform="translate(216.772737 84.617573)">番号は</text>
+    <text style="fill: #52514e; font: 9px 'Hiragino Sans', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif" transform="translate(203.272737 94.788698)">反時計回りに</text>
+    <text style="fill: #52514e; font: 9px 'Hiragino Sans', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif" transform="translate(216.772737 104.959823)">増える</text>
+   </g>
+   <g id="text_8">
+    <text style="fill: #2a78d6; font: 700 10px 'Hiragino Sans', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle" x="225.654806" y="171.373929" transform="rotate(-0 225.654806 171.373929)">前方 61 本</text>
+   </g>
+   <g id="text_9">
+    <text style="fill: #0b0b0b; font: 10px 'Hiragino Sans', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle" x="176.396875" y="291.216375" transform="rotate(-0 176.396875 291.216375)">前方 61 本 ＝ ranges[0〜30]（31 本）＋ ranges[330〜359]（30 本）</text>
+   </g>
+   <g id="text_10">
+    <text style="fill: #0b0b0b; font: 13.2px 'Hiragino Sans', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle" x="194.868599" y="17.376375" transform="rotate(-0 194.868599 17.376375)">レーザーの番号と向き（真上から見た図）</text>
+   </g>
+   <g id="patch_4">
+    <path d="M 176.396875 169.610858 
+C 179.254484 169.610858 181.995438 168.475518 184.016072 166.454883 
+C 186.036707 164.434248 187.172047 161.693294 187.172047 158.835685 
+C 187.172047 155.978076 186.036707 153.237123 184.016072 151.216488 
+C 181.995438 149.195853 179.254484 148.060513 176.396875 148.060513 
+C 173.539266 148.060513 170.798312 149.195853 168.777678 151.216488 
+C 166.757043 153.237123 165.621703 155.978076 165.621703 158.835685 
+C 165.621703 161.693294 166.757043 164.434248 168.777678 166.454883 
+C 170.798312 168.475518 173.539266 169.610858 176.396875 169.610858 
+z
+" clip-path="url(#pf51271463c)" style="fill: #2a78d6; stroke: #2a78d6; stroke-linejoin: miter"/>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="pf51271463c">
+   <rect x="16.308599" y="23.376375" width="357.12" height="280.154483"/>
+  </clipPath>
+ </defs>
+</svg>
