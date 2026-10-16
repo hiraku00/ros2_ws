@@ -8,7 +8,7 @@ ROS 2 (Jazzy) の学習用ワークスペース。Apple Silicon の Mac 上で D
 | パート | 内容 | パッケージ |
 |---|---|---|
 | **入門編** | 壁に向かって走る仮想ロボットを、頭脳ノード（`brain`）で制御する。センサーノイズ・チャタリング・移動平均・ヒステリシスを、実測の数字つきで学ぶ | `my_first_pkg` |
-| **ステップ 2（進行中）** | 本物と同じ型（`/scan`、`/cmd_vel`）で、2D の部屋を走る掃除ロボットを作る | `room_robot_pkg` |
+| **ステップ 2（進行中）** | 本物と同じ型（`/scan`、`/cmd_vel`）で、2D の部屋を走る掃除ロボットを作る。フェーズ 0〜2（世界、障害物をよける頭脳）まで完了 | `room_robot_pkg` |
 
 ## ドキュメント
 
@@ -31,6 +31,7 @@ ROS 2 (Jazzy) の学習用ワークスペース。Apple Silicon の Mac 上で D
 | [02. room_sim の仕組み](docs/room-robot/02-room-sim.md) | 部屋・ロボットの動き・LiDAR のまねかた・図の見かた・パラメータ |
 | [03. 実験の記録](docs/room-robot/03-experiments.md) | 予想 → 実測 → 差の理由（正面の距離、壁まで前進、その場で回転） |
 | [04. つまずきやすい点と対処](docs/room-robot/04-troubleshooting.md) | 数字の意味、図が見えない、プロセスの後始末 |
+| [05. avoider（障害物をよける頭脳）](docs/room-robot/05-avoider.md) | 前方 ±30° の最小値で、回る／進むを決める。実験の記録と、弱点（チャタリング） |
 
 ### その他
 
@@ -47,7 +48,8 @@ src/my_first_pkg/my_first_pkg/          # 入門編
 ├── sim_robot.py  # 仮想ロボット（体）: ノイズ入りの distance を送り、cmd に従って動く
 └── brain.py      # 頭脳: distance を移動平均して、FORWARD / SLOW / STOP / TURN を cmd に送る
 src/room_robot_pkg/room_robot_pkg/      # ステップ 2
-└── room_sim.py   # 2D の部屋: /cmd_vel で動き、/scan（360 本）を送り、図を output/ に書き出す
+├── room_sim.py   # 2D の部屋: /cmd_vel で動き、/scan（360 本）を送り、図を output/ に書き出す
+└── avoider.py    # 頭脳: /scan の前方 ±30° の最小値が 1.5 m 未満なら回り、そうでなければ進む（/cmd_vel）
 tools/
 ├── simulate_filters.py          # ノイズ対策の効果を ROS 2 なしで数値化する（Mac で実行）
 └── probe_brain_slow_band.py     # 本物の brain に距離を直接送り、SLOW の境界の揺れを確かめる（コンテナ内）
@@ -137,12 +139,18 @@ source install/setup.bash
 ```bash
 # タブ 1: シミュレータ
 ros2 run room_robot_pkg room_sim
-# タブ 2: 手で動かす（Ctrl+C で止める。0.5 秒指示が途絶えると、ロボットは止まる）
+# タブ 2: 頭脳を動かす（壁ぞいに、走り続ける）
+ros2 run room_robot_pkg avoider
+```
+
+頭脳なしで、手で動かすこともできる（Ctrl+C で止める。0.5 秒指示が途絶えると、ロボットは止まる）。
+
+```bash
 ros2 topic pub -r 10 /cmd_vel geometry_msgs/msg/Twist "{linear: {x: 0.5}, angular: {z: 0.0}}"
 ```
 
 Mac のブラウザで、`file:///Users/hiraku/Practice/ros2_ws/output/index.html` を開くと、動きが見える（1 秒ごとに更新）。
-詳しくは [02. room_sim の仕組み](docs/room-robot/02-room-sim.md)。
+タブ 1 の `room_sim` には、「回り始めた／回るのをやめた」の瞬間の位置が出る。詳しくは [02. room_sim の仕組み](docs/room-robot/02-room-sim.md) と [05. avoider](docs/room-robot/05-avoider.md)。
 
 ## 本物のロボットとの対応
 
@@ -150,7 +158,7 @@ Mac のブラウザで、`file:///Users/hiraku/Practice/ros2_ws/output/index.htm
 |---|---|---|
 | `distance`（数字 1 つ） | `/scan`（`LaserScan`、360 個の配列） | LiDAR |
 | `cmd`（文字） | `/cmd_vel`（`Twist`、速さ） | 走行指令 |
-| `brain` | `avoider`（これから作る） | 障害物回避・経路計画（Nav2 など） |
+| `brain` | `avoider` | 障害物回避・経路計画（Nav2 など） |
 | `sim_robot` | `room_sim` | モーターとタイヤ、LiDAR |
 
 ## 注意
