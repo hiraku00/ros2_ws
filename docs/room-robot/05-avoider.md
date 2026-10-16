@@ -138,12 +138,16 @@ a[:2] + a[8:]   # → [10, 11, 18, 19]   ← 2 つをくっつけられる
         rclpy.spin(node)                                    # メッセージを待ち続ける
     except (KeyboardInterrupt, ExternalShutdownException):  # Ctrl+C で出る 2 種類の通知
         pass
+    except Exception:
+        if rclpy.ok():        # まだ動いているはずなのに出た例外は、本物のエラーなので、そのまま出す
+            raise             # （終了の途中で出る RCLError は、無視する）
     node.destroy_node()
     rclpy.try_shutdown()                                    # 「まだ終わっていなければ」終わらせる
 ```
 
 Jazzy の `rclpy` は、Ctrl+C を受けると、自動で後片づけ（shutdown）をします。そのあと、もう一度 `rclpy.shutdown()` を呼ぶと、エラーになります。**`try_shutdown()` なら、エラーになりません。**
 また、`spin` 中の Ctrl+C は、`KeyboardInterrupt` ではなく、`ExternalShutdownException` として届くことがあるため、両方を捕まえます。
+それでも、終了のタイミングが悪いと、`RCLError`（「もう終わっています」）が出ることがあります（実測で、25 回に 2 回ほど）。`rclpy.ok()`（まだ動いているか）が `False` のときの例外だけを、無視します。
 
 ## 5. 動かしかた
 
@@ -230,4 +234,4 @@ ros2 run room_robot_pkg avoider
 | `Twist()` | 速さを入れる箱。最初は、すべて 0.0 |
 | チャタリング | 境界の上で、判断が行ったり来たりすること |
 
-次は、フェーズ 3（`/scan` にノイズを足して、フィルタを作る）です。
+次は、[06. ノイズと、最小値・平均・移動平均](06-noise-and-filter.md)（フェーズ 3）です。
