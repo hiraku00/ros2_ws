@@ -54,7 +54,8 @@ src/room_robot_pkg/room_robot_pkg/      # ステップ 2
 tools/
 ├── simulate_filters.py          # ノイズ対策の効果を ROS 2 なしで数値化する（Mac で実行）
 ├── probe_brain_slow_band.py     # 本物の brain に距離を直接送り、SLOW の境界の揺れを確かめる（コンテナ内）
-└── simulate_avoider_filters.py  # avoider の最小値・平均・移動平均を、ROS 2 なしで比べる（Mac で実行。約 3 分）
+├── simulate_avoider_filters.py  # avoider の最小値・平均・移動平均を、ROS 2 なしで比べる（Mac で実行。約 3 分）
+└── make_room_robot_figures.py   # docs/room-robot/images/ の図（SVG）を、room_sim と同じ計算から作る（Mac。約 3〜4 分）
 docs/                     # 解説ドキュメント（basics/ と room-robot/）
 output/                   # room_sim が書き出す図（生成物。Git では追跡しない）
 ```
@@ -127,6 +128,7 @@ ros2 topic pub /cmd std_msgs/msg/String "{data: TURN}" --once   # 人間が頭�
 python3 tools/simulate_filters.py          # Mac で。ROS 2 不要
 python3 tools/probe_brain_slow_band.py     # コンテナの中で。本物の brain を検証する
 python3 tools/simulate_avoider_filters.py  # Mac で。ステップ 2 の avoider の、フィルタ比較
+python3 tools/make_room_robot_figures.py   # Mac で。ステップ 2 の文書の図を作り直す（matplotlib が必要）
 ```
 
 ## ステップ 2 の実行方法（room_sim）
