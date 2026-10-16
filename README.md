@@ -8,7 +8,7 @@ ROS 2 (Jazzy) の学習用ワークスペース。Apple Silicon の Mac 上で D
 | パート | 内容 | パッケージ |
 |---|---|---|
 | **入門編** | 壁に向かって走る仮想ロボットを、頭脳ノード（`brain`）で制御する。センサーノイズ・チャタリング・移動平均・ヒステリシスを、実測の数字つきで学ぶ | `my_first_pkg` |
-| **ステップ 2（進行中）** | 本物と同じ型（`/scan`、`/cmd_vel`）で、2D の部屋を走る掃除ロボットを作る。フェーズ 0〜2（世界、障害物をよける頭脳）まで完了 | `room_robot_pkg` |
+| **ステップ 2（進行中）** | 本物と同じ型（`/scan`、`/cmd_vel`）で、2D の部屋を走る掃除ロボットを作る。フェーズ 0〜3（世界、障害物をよける頭脳、ノイズ対策）まで完了 | `room_robot_pkg` |
 
 ## ドキュメント
 
@@ -32,6 +32,7 @@ ROS 2 (Jazzy) の学習用ワークスペース。Apple Silicon の Mac 上で D
 | [03. 実験の記録](docs/room-robot/03-experiments.md) | 予想 → 実測 → 差の理由（正面の距離、壁まで前進、その場で回転） |
 | [04. つまずきやすい点と対処](docs/room-robot/04-troubleshooting.md) | 数字の意味、図が見えない、プロセスの後始末 |
 | [05. avoider（障害物をよける頭脳）](docs/room-robot/05-avoider.md) | 前方 ±30° の最小値で、回る／進むを決める。実験の記録と、弱点（チャタリング） |
+| [06. ノイズと、最小値・平均・移動平均](docs/room-robot/06-noise-and-filter.md) | 最小値のかたより、平均の危険、移動平均（N=1/5/20）の比較。実測の数字つき |
 
 ### その他
 
@@ -49,10 +50,11 @@ src/my_first_pkg/my_first_pkg/          # 入門編
 └── brain.py      # 頭脳: distance を移動平均して、FORWARD / SLOW / STOP / TURN を cmd に送る
 src/room_robot_pkg/room_robot_pkg/      # ステップ 2
 ├── room_sim.py   # 2D の部屋: /cmd_vel で動き、/scan（360 本）を送り、図を output/ に書き出す
-└── avoider.py    # 頭脳: /scan の前方 ±30° の最小値が 1.5 m 未満なら回り、そうでなければ進む（/cmd_vel）
+└── avoider.py    # 頭脳: /scan の前方 ±30° の最小値（過去 5 回の平均）が 1.5 m 未満なら回り、そうでなければ進む（/cmd_vel）
 tools/
 ├── simulate_filters.py          # ノイズ対策の効果を ROS 2 なしで数値化する（Mac で実行）
-└── probe_brain_slow_band.py     # 本物の brain に距離を直接送り、SLOW の境界の揺れを確かめる（コンテナ内）
+├── probe_brain_slow_band.py     # 本物の brain に距離を直接送り、SLOW の境界の揺れを確かめる（コンテナ内）
+└── simulate_avoider_filters.py  # avoider の最小値・平均・移動平均を、ROS 2 なしで比べる（Mac で実行。約 3 分）
 docs/                     # 解説ドキュメント（basics/ と room-robot/）
 output/                   # room_sim が書き出す図（生成物。Git では追跡しない）
 ```
@@ -124,6 +126,7 @@ ros2 topic pub /cmd std_msgs/msg/String "{data: TURN}" --once   # 人間が頭�
 ```bash
 python3 tools/simulate_filters.py          # Mac で。ROS 2 不要
 python3 tools/probe_brain_slow_band.py     # コンテナの中で。本物の brain を検証する
+python3 tools/simulate_avoider_filters.py  # Mac で。ステップ 2 の avoider の、フィルタ比較
 ```
 
 ## ステップ 2 の実行方法（room_sim）
@@ -142,6 +145,8 @@ ros2 run room_robot_pkg room_sim
 # タブ 2: 頭脳を動かす（壁ぞいに、走り続ける）
 ros2 run room_robot_pkg avoider
 ```
+
+`/scan` にノイズを足して試すには、`room_sim` を、`--ros-args -p noise:=0.5` つきで起動する（[06](docs/room-robot/06-noise-and-filter.md)）。
 
 頭脳なしで、手で動かすこともできる（Ctrl+C で止める。0.5 秒指示が途絶えると、ロボットは止まる）。
 
