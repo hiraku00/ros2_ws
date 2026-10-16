@@ -113,6 +113,7 @@ class RoomSim(Node):
         self.last_cmd_time = None
         self.last_ranges = []
 
+        self.turning = False
         self.scan_pub = self.create_publisher(LaserScan, '/scan', 10)
         self.create_subscription(Twist, '/cmd_vel', self.on_cmd, 10)
 
@@ -143,6 +144,14 @@ class RoomSim(Node):
             self.x, self.y = nx, ny
 
         self.publish_scan()
+        # 回り始めた・やめた瞬間だけ、位置をログに出す（図は 1 秒おきで、瞬間を見失うため）
+        turning = abs(self.angular) > 1e-9
+        if turning != self.turning:
+            self.turning = turning
+            what = '回り始めた' if turning else '回るのをやめた'
+            self.get_logger().info(
+                f'{what}: x={self.x:.2f} y={self.y:.2f} θ={math.degrees(self.theta) % 360:.0f}°')
+
 
     def publish_scan(self):
         range_max = self.get_parameter('range_max').value
