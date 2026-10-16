@@ -9,6 +9,7 @@ import random
 
 from geometry_msgs.msg import Twist
 import rclpy
+from rclpy.executors import ExternalShutdownException
 from rclpy.node import Node
 from sensor_msgs.msg import LaserScan
 
@@ -112,8 +113,8 @@ class RoomSim(Node):
         self.angular = 0.0
         self.last_cmd_time = None
         self.last_ranges = []
-
         self.turning = False
+
         self.scan_pub = self.create_publisher(LaserScan, '/scan', 10)
         self.create_subscription(Twist, '/cmd_vel', self.on_cmd, 10)
 
@@ -143,7 +144,6 @@ class RoomSim(Node):
         if not hits_something(nx, ny):
             self.x, self.y = nx, ny
 
-        self.publish_scan()
         # 回り始めた・やめた瞬間だけ、位置をログに出す（図は 1 秒おきで、瞬間を見失うため）
         turning = abs(self.angular) > 1e-9
         if turning != self.turning:
@@ -152,6 +152,7 @@ class RoomSim(Node):
             self.get_logger().info(
                 f'{what}: x={self.x:.2f} y={self.y:.2f} θ={math.degrees(self.theta) % 360:.0f}°')
 
+        self.publish_scan()
 
     def publish_scan(self):
         range_max = self.get_parameter('range_max').value
@@ -177,7 +178,8 @@ class RoomSim(Node):
         msg.range_min = RANGE_MIN
         msg.range_max = float(range_max)
         msg.ranges = ranges
-        self.scan_pub.publish(msg)
+        if rclpy.ok():  # Ctrl+C の終了処理の途中なら、送らない
+            self.scan_pub.publish(msg)
 
     def write_output(self):
         svg = self.make_svg()
@@ -254,11 +256,11 @@ def main(args=None):
     node = RoomSim()
     try:
         rclpy.spin(node)
-    except KeyboardInterrupt:
+    except (KeyboardInterrupt, ExternalShutdownException):
         pass
     finally:
         node.destroy_node()
-        rclpy.shutdown()
+        rclpy.try_shutdown()
 
 
 if __name__ == '__main__':
