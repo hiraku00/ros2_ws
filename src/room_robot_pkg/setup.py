@@ -25,6 +25,7 @@ setup(
     entry_points={
         'console_scripts': [
             'room_sim = room_robot_pkg.room_sim:main',
+            'avoider = room_robot_pkg.avoider:main',
         ],
     },
 )
