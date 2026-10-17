@@ -2,7 +2,7 @@
 
 ROS 2 (Jazzy) の学習用ワークスペース。ROS 2 初心者の学習を、一緒に進める。
 
-**まず [docs/handoff.md](docs/handoff.md) を読むこと。** 経緯、現状、次にやること（ステップ 2 のフェーズ 2）、環境、進め方が、すべて書いてある。解説は `docs/basics/`（入門編）と `docs/room-robot/`（ステップ 2）に分けてある。
+**まず [docs/handoff.md](docs/handoff.md) を読むこと。** 経緯、現状、次にやること、環境、進め方が、すべて書いてある。解説は `docs/basics/`（入門編）と `docs/room-robot/`（ステップ 2）に分けてある。
 
 ## 環境（要点）
 

@@ -174,4 +174,4 @@ python3 tools/make_room_robot_figures.py --only hysteresis-compare    # 4 章の
 | 状態変数 | 「いま、どの状態か」を覚えておく変数（`self.avoiding`） |
 | 幅 | 入る線と出る線の差（`hysteresis`） |
 
-次は、フェーズ 5（launch ファイル）です。
+次は [08. launch ファイル](08-launch.md)（フェーズ 5）へ。
