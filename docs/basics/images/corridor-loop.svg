@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="674.64pt" height="364.880312pt" viewBox="0 0 674.64 364.880312" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.9.2, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 364.880312 
+L 674.64 364.880312 
+L 674.64 0 
+L 0 0 
+z
+" style="fill: #fcfcfb"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 7.2 160.916676 
+L 667.44 160.916676 
+L 667.44 21.680312 
+L 7.2 21.680312 
+z
+" style="fill: #fcfcfb"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 37.210909 100.706357 
+L 637.429091 100.706357 
+L 637.429091 63.074907 
+L 37.210909 63.074907 
+z
+" clip-path="url(#pe8ba4a4436)" style="fill: #f1efea; stroke: #9b9a95; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 31.208727 111.995792 
+L 37.210909 111.995792 
+L 37.210909 51.785472 
+L 31.208727 51.785472 
+z
+" clip-path="url(#pe8ba4a4436)" style="fill: #0b0b0b; stroke: #0b0b0b; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 631.426909 111.995792 
+L 637.429091 111.995792 
+L 637.429091 51.785472 
+L 631.426909 51.785472 
+z
+" clip-path="url(#pe8ba4a4436)" style="fill: #0b0b0b; stroke: #0b0b0b; stroke-linejoin: miter"/>
+   </g>
+   <g id="matplotlib.axis_1">
+    <g id="xtick_1">
+     <g id="text_1">
+      <text style="fill: #52514e; font: 11px 'Hiragino Sans', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle" x="37.210909" y="176.396989" transform="rotate(-0 37.210909 176.396989)">0</text>
+     </g>
+    </g>
+    <g id="xtick_2">
+     <g id="text_2">
+      <text style="fill: #52514e; font: 11px 'Hiragino Sans', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle" x="187.265455" y="176.396989" transform="rotate(-0 187.265455 176.396989)">10</text>
+     </g>
+    </g>
+    <g id="xtick_3">
+     <g id="text_3">
+      <text style="fill: #52514e; font: 11px 'Hiragino Sans', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle" x="337.32" y="176.396989" transform="rotate(-0 337.32 176.396989)">20</text>
+     </g>
+    </g>
+    <g id="xtick_4">
+     <g id="text_4">
+      <text style="fill: #52514e; font: 11px 'Hiragino Sans', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle" x="487.374545" y="176.396989" transform="rotate(-0 487.374545 176.396989)">30</text>
+     </g>
+    </g>
+    <g id="xtick_5">
+     <g id="text_5">
+      <text style="fill: #52514e; font: 11px 'Hiragino Sans', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle" x="637.429091" y="176.396989" transform="rotate(-0 637.429091 176.396989)">40</text>
+     </g>
+    </g>
+   </g>
+   <g id="matplotlib.axis_2">
+    <g id="ytick_1"/>
+    <g id="ytick_2"/>
+    <g id="ytick_3"/>
+    <g id="ytick_4"/>
+   </g>
+   <g id="text_6">
+    <text style="fill: #52514e; font: 10px 'Hiragino Sans', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle" x="34.209818" y="44.090755" transform="rotate(-0 34.209818 44.090755)">壁 (0)</text>
+   </g>
+   <g id="text_7">
+    <text style="fill: #52514e; font: 10px 'Hiragino Sans', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle" x="640.430182" y="44.090755" transform="rotate(-0 640.430182 44.090755)">壁 (40)</text>
+   </g>
+   <g id="text_8">
+    <text style="fill: #2a78d6; font: 700 20px 'Hiragino Sans', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle" x="487.374545" y="87.720319" transform="rotate(-0 487.374545 87.720319)">&gt;</text>
+   </g>
+   <g id="patch_6">
+    <path d="M 491.052751 123.285227 
+Q 562.401607 123.285227 633.750464 123.285227 
+" style="fill: none; stroke: #2a78d6; stroke-width: 1.5; stroke-linecap: round"/>
+    <path d="M 495.452751 125.485227 
+L 491.052751 123.285227 
+L 495.452751 121.085227 
+" style="fill: none; stroke: #2a78d6; stroke-width: 1.5; stroke-linecap: round"/>
+    <path d="M 629.350464 121.085227 
+L 633.750464 123.285227 
+L 629.350464 125.485227 
+" style="fill: none; stroke: #2a78d6; stroke-width: 1.5; stroke-linecap: round"/>
+   </g>
+   <g id="text_9">
+    <text style="fill: #0b0b0b; font: 10px 'Hiragino Sans', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle" x="562.401818" y="136.639319" transform="rotate(-0 562.401818 136.639319)">壁まで ＝ 40 − 30 ＝ 10</text>
+   </g>
+   <g id="text_10">
+    <text style="fill: #0b0b0b; font: 10px 'Hiragino Sans', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle" x="487.374545" y="45.972327" transform="rotate(-0 487.374545 45.972327)">ロボット（位置 30、右向き）</text>
+   </g>
+   <g id="text_11">
+    <text style="fill: #0b0b0b; font: 11px 'Hiragino Sans', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle" x="337.32" y="15.680312" transform="rotate(-0 337.32 15.680312)">40 マスの廊下（1 マス ＝ 1）</text>
+   </g>
+  </g>
+  <g id="axes_2">
+   <g id="patch_7">
+    <path d="M 29.623245 298.866872 
+L 209.009208 298.866872 
+Q 213.992151 298.866872 213.992151 293.520196 
+L 213.992151 221.340065 
+Q 213.992151 215.993389 209.009208 215.993389 
+L 29.623245 215.993389 
+Q 24.640302 215.993389 24.640302 221.340065 
+L 24.640302 293.520196 
+Q 24.640302 298.866872 29.623245 298.866872 
+z
+" clip-path="url(#p1efacc7ebf)" style="fill: #e3edf9; stroke: #2a78d6; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_8">
+    <path d="M 465.630792 298.866872 
+L 645.016755 298.866872 
+Q 649.999698 298.866872 649.999698 293.520196 
+L 649.999698 221.340065 
+Q 649.999698 215.993389 645.016755 215.993389 
+L 465.630792 215.993389 
+Q 460.647849 215.993389 460.647849 221.340065 
+L 460.647849 293.520196 
+Q 460.647849 298.866872 465.630792 298.866872 
+z
+" clip-path="url(#p1efacc7ebf)" style="fill: #e3edf9; stroke: #2a78d6; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="text_12">
+    <text style="fill: #0b0b0b; font: 700 11px 'Hiragino Sans', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif" transform="translate(88.737086 254.259209)">sim_robot</text>
+    <text style="fill: #0b0b0b; font: 700 11px 'Hiragino Sans', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif" transform="translate(102.816226 267.013709)">（体）</text>
+   </g>
+   <g id="text_13">
+    <text style="fill: #0b0b0b; font: 700 11px 'Hiragino Sans', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif" transform="translate(539.29643 254.259209)">brain</text>
+    <text style="fill: #0b0b0b; font: 700 11px 'Hiragino Sans', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif" transform="translate(538.823774 267.013709)">（頭）</text>
+   </g>
+   <g id="patch_9">
+    <path d="M 217.858635 234.038422 
+Q 337.317187 234.038422 454.763279 234.038422 
+" style="fill: none; stroke: #52514e; stroke-width: 1.8; stroke-linecap: round"/>
+    <path d="M 448.363279 230.838422 
+L 454.763279 234.038422 
+L 448.363279 237.238422 
+z
+" style="fill: #52514e; stroke: #52514e; stroke-width: 1.8; stroke-linecap: round"/>
+   </g>
+   <g id="patch_10">
+    <path d="M 456.781365 280.82184 
+Q 337.322813 280.82184 219.876721 280.82184 
+" style="fill: none; stroke: #52514e; stroke-width: 1.8; stroke-linecap: round"/>
+    <path d="M 226.276721 284.02184 
+L 219.876721 280.82184 
+L 226.276721 277.62184 
+z
+" style="fill: #52514e; stroke: #52514e; stroke-width: 1.8; stroke-linecap: round"/>
+   </g>
+   <g id="text_14">
+    <text style="fill: #0b0b0b; font: 10px 'Hiragino Sans', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle" x="337.32" y="225.305076" transform="rotate(-0 337.32 225.305076)">distance（壁までの距離）</text>
+   </g>
+   <g id="text_15">
+    <text style="fill: #0b0b0b; font: 10px 'Hiragino Sans', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle" x="337.32" y="295.41456" transform="rotate(-0 337.32 295.41456)">cmd（FORWARD / SLOW / STOP / TURN）</text>
+   </g>
+   <g id="text_16">
+    <text style="fill: #52514e; font: 10px 'Hiragino Sans', 'DejaVu Sans', 'Bitstream Vera Sans', 'Computer Modern Sans Serif', 'Lucida Grande', 'Verdana', 'Geneva', 'Lucid', 'Arial', 'Helvetica', 'Avant Garde', sans-serif; text-anchor: middle" x="337.32" y="337.630276" transform="rotate(-0 337.32 337.630276)">0.2 秒ごとに、この輪を 1 周 → ロボットが 1 歩動く</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="pe8ba4a4436">
+   <rect x="7.2" y="21.680312" width="660.24" height="139.236364"/>
+  </clipPath>
+  <clipPath id="p1efacc7ebf">
+   <rect x="7.2" y="190.596676" width="660.24" height="167.083636"/>
+  </clipPath>
+ </defs>
+</svg>
