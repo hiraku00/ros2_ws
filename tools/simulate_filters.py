@@ -5,16 +5,19 @@ brain.py と同じ判断ロジックを純 Python で再現し、壁への接近
 
     python3 tools/simulate_filters.py
 """
-import random
 from collections import deque
+import random
 
 TURN = 3.0     # この距離未満で STOP に入る
 SLOW = 8.0     # この距離未満で SLOW に入る
 NOISE = 0.5    # センサーノイズ（±）
 
 
-def approach(n, hysteresis, noise=NOISE, slow_hysteresis_on=True):
-    """壁へ向かって走り、TURN が出るまでの指示列と最接近距離を返す。"""
+def approach(n, hysteresis, noise=NOISE, slow_hysteresis_on=True, trace=None):
+    """壁へ向かって走り、TURN が出るまでの指示列と最接近距離を返す。
+
+    trace にリストを渡すと、1 歩（0.2 秒）ごとの (時刻, 真の距離, 測定値, 判断に使った値, 指示) を追加する（図を作るため）。
+    """
     history = deque(maxlen=n)
     wall = 37.5        # 壁までの真の距離
     cmd = 'F'          # F=FORWARD, S=SLOW, P=STOP, T=TURN
@@ -24,7 +27,8 @@ def approach(n, hysteresis, noise=NOISE, slow_hysteresis_on=True):
     for step in range(1, 400):
         wall = max(0.0, wall - {'F': 0.5, 'S': 0.2}.get(cmd, 0.0))
         closest = min(closest, wall)
-        history.append(wall + random.uniform(-noise, noise))
+        measured = wall + random.uniform(-noise, noise)
+        history.append(measured)
         dist = sum(history) / len(history)
         t = step * 0.2
         threshold = TURN + hysteresis if stop_t is not None else TURN
@@ -37,6 +41,8 @@ def approach(n, hysteresis, noise=NOISE, slow_hysteresis_on=True):
         else:
             stop_t, cmd, slowing = None, 'F', False
         seq.append(cmd)
+        if trace is not None:
+            trace.append((t, wall, measured, dist, cmd))
         if cmd == 'T':
             break
     return ''.join(seq), closest
