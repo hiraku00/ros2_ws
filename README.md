@@ -8,7 +8,7 @@ ROS 2 (Jazzy) の学習用ワークスペース。Apple Silicon の Mac 上で D
 | パート | 内容 | パッケージ |
 |---|---|---|
 | **入門編** | 壁に向かって走る仮想ロボットを、頭脳ノード（`brain`）で制御する。センサーノイズ・チャタリング・移動平均・ヒステリシスを、実測の数字つきで学ぶ | `my_first_pkg` |
-| **ステップ 2（進行中）** | 本物と同じ型（`/scan`、`/cmd_vel`）で、2D の部屋を走る掃除ロボットを作る。フェーズ 0〜4（世界、障害物をよける頭脳、ノイズ対策、ヒステリシス）まで完了 | `room_robot_pkg` |
+| **ステップ 2（進行中）** | 本物と同じ型（`/scan`、`/cmd_vel`）で、2D の部屋を走る掃除ロボットを作る。フェーズ 0〜5（世界、障害物をよける頭脳、ノイズ対策、ヒステリシス、launch ファイル）まで完了 | `room_robot_pkg` |
 
 ## ドキュメント
 
@@ -34,6 +34,7 @@ ROS 2 (Jazzy) の学習用ワークスペース。Apple Silicon の Mac 上で D
 | [05. avoider（障害物をよける頭脳）](docs/room-robot/05-avoider.md) | 前方 ±30° の最小値で、回る／進むを決める。実験の記録と、弱点（チャタリング） |
 | [06. ノイズと、最小値・平均・移動平均](docs/room-robot/06-noise-and-filter.md) | 最小値のかたより、平均の危険、移動平均（N=1/5/20）の比較。実測の数字つき |
 | [07. ヒステリシス](docs/room-robot/07-hysteresis.md) | 回り始める線（1.5 m）とやめる線（2.0 m）を分けて、ちょこちょこ回りを止める。幅の決めかた |
+| [08. launch ファイル](docs/room-robot/08-launch.md) | room_sim と avoider を、1 つのコマンドで起動・停止する。setup.py への登録、ログの読みかた |
 
 ### その他
 
@@ -52,6 +53,8 @@ src/my_first_pkg/my_first_pkg/          # 入門編
 src/room_robot_pkg/room_robot_pkg/      # ステップ 2
 ├── room_sim.py   # 2D の部屋: /cmd_vel で動き、/scan（360 本）を送り、図を output/ に書き出す
 └── avoider.py    # 頭脳: /scan の前方 ±30° の最小値（過去 5 回の平均）で、1.5 m 未満なら回り始め、2.0 m（hysteresis 0.5）あくまで回る（/cmd_vel）
+src/room_robot_pkg/launch/
+└── room.launch.py  # room_sim（noise 0.5）と avoider（hysteresis 0.5）を、まとめて起動する
 tools/
 ├── simulate_filters.py          # ノイズ対策の効果を ROS 2 なしで数値化する（Mac で実行）
 ├── probe_brain_slow_band.py     # 本物の brain に距離を直接送り、SLOW の境界の揺れを確かめる（コンテナ内）
@@ -145,14 +148,13 @@ colcon build --symlink-install --packages-select room_robot_pkg
 source install/setup.bash
 ```
 
+room_sim（ノイズ 0.5）と avoider（幅 0.5）を、1 つのタブで、まとめて起動する（Ctrl+C 1 回で、両方止まる）:
+
 ```bash
-# タブ 1: シミュレータ
-ros2 run room_robot_pkg room_sim
-# タブ 2: 頭脳を動かす（壁ぞいに、走り続ける）
-ros2 run room_robot_pkg avoider
+ros2 launch room_robot_pkg room.launch.py
 ```
 
-`/scan` にノイズを足して試すには、`room_sim` を、`--ros-args -p noise:=0.5` つきで起動する（[06](docs/room-robot/06-noise-and-filter.md)）。
+設定は [launch/room.launch.py](src/room_robot_pkg/launch/room.launch.py) に書いてある（[08](docs/room-robot/08-launch.md)）。1 つずつ起動するときは、タブを分けて `ros2 run room_robot_pkg room_sim` と `ros2 run room_robot_pkg avoider`。
 
 頭脳なしで、手で動かすこともできる（Ctrl+C で止める。0.5 秒指示が途絶えると、ロボットは止まる）。
 

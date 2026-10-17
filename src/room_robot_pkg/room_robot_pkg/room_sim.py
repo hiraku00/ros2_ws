@@ -6,6 +6,7 @@
 import math
 import os
 import random
+import signal
 
 from geometry_msgs.msg import Twist
 import rclpy
@@ -262,6 +263,7 @@ def main(args=None):
         if rclpy.ok():  # Ctrl+C の終了処理の途中で出る RCLError だけを、無視する
             raise
     finally:
+        signal.signal(signal.SIGINT, signal.SIG_IGN)  # 止まると決めたら、2 回目の Ctrl+C の合図は無視する
         node.destroy_node()
         rclpy.try_shutdown()
 
