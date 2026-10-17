@@ -14,8 +14,8 @@
 | 何をしているか | ROS 2 (Jazzy) の学習。Mac（Apple Silicon）の Docker コンテナ内で動かす |
 | 学習者 | ROS 2 初心者。説明は日本語で、中学生が分かるレベルを求めている |
 | 済んだこと | ノード・トピック・パラメータの基本、壁に向かって走るロボットの制御（`sim_robot` + `brain`）、ノイズ、移動平均、ヒステリシス（STOP と SLOW の 2 境界）、ステップ 2 のフェーズ 0〜3（`room_sim`、`avoider`、ノイズと移動平均。最小値のかたより、平均の危険、N の比較） |
-| いまの状態 | ステップ 2 の**フェーズ 0〜5 が完了**（`room_sim`、学習者が書いた `avoider`（最小値の移動平均 N=5 ＋ ヒステリシス 幅 0.5）、`launch/room.launch.py`）。マージ済みの PR は `git log` で確認 |
-| 次にやること | 学習者と決める。候補: launch の引数（`ros2 launch room_robot_pkg room.launch.py noise:=1.0` のように、起動時に値を変える）、またはフェーズ 6（発展: `rosbag2`、`rqt` など）。詳細は [5 章](#5-これからやること-ステップ-22d-部屋の掃除ロボット) |
+| いまの状態 | ステップ 2 の**フェーズ 0〜5 が完了**（`room_sim`、学習者が書いた `avoider`（最小値の移動平均 N=5 ＋ ヒステリシス 幅 0.5）、`launch/room.launch.py`（引数 `noise`・`hysteresis`））。マージ済みの PR は `git log` で確認 |
+| 次にやること | 学習者と決める。候補: フェーズ 6（発展: `rosbag2` で記録・再生、`rqt` でノードのつながりを図で見る）。詳細は [5 章](#5-これからやること-ステップ-22d-部屋の掃除ロボット) |
 | 進め方 | 学習者が自分でコードを書き、Claude がレビューする（[3 章](#3-学習者との進め方)） |
 | 最初に確認すること | [7 章](#7-新しいセッションの最初の手順)のコマンドで、Docker とコンテナの状態を見る |
 
@@ -297,6 +297,7 @@ room_sim ──/scan (LaserScan)──→ avoider ──/cmd_vel (Twist)──�
 ### 5.7 先に学習者へ聞く予想問題（例）
 
 - **フェーズ 4 の結果（済み）**: 幅 0.5 で、60 秒の「回り始めた」は約 11 回 → 3 回。`avoider` の判断値は止まっていれば 0.04 m しかぶれず、ゆれの原因はノイズではなくロボットの動き。だから幅は「ノイズの全幅」ではなく、計算でくらべて決めた（[07](room-robot/07-hysteresis.md)）
+- **launch の引数（済み）**: `noise:=1.0` のように、起動時に値を変えられる。小数は `1.0` と書く（`1` は整数で、`InvalidParameterTypeException`）。ノイズを 2 倍にしても、回数は 3.0 → 3.5 回でほぼ同じ。変わるのは、回り始める位置（18.12 → 17.66）（[08 の 5 章](room-robot/08-launch.md#5-引数起動するときに値を変える)）
 - **フェーズ 5 の結果（済み）**: launch で起動すると、ログは 1 つのタブに `[room_sim-1]` の印つきで出る。launch から Ctrl+C で止めると、終わりの処理の途中で 2 回目の SIGINT が届き Traceback が出る（公式の talker でも出る）ので、両ノードの `main()` で 2 回目を無視する（[08](room-robot/08-launch.md)）
 - フェーズ 3 の前: 「LiDAR にノイズを足すと、壁沿いを走るとき、どんな動きが出ますか？」
 - フェーズ 3: 「前方の最小値と平均値は、どちらがノイズに強いですか？ 安全なのはどちらですか？」（最小値は安全寄りだが、外れ値に弱い。平均は遅れる）
@@ -387,6 +388,6 @@ docker exec ros2 bash -c 'source /opt/ros/jazzy/setup.bash && source /root/ros2_
 | [05-avoider.md](room-robot/05-avoider.md) | フェーズ 2: `avoider` の仕組み、実験の記録、弱点（チャタリング） |
 | [06-noise-and-filter.md](room-robot/06-noise-and-filter.md) | フェーズ 3: ノイズ、最小値のかたより、平均の危険、移動平均（N=1/5/20）の比較 |
 | [07-hysteresis.md](room-robot/07-hysteresis.md) | フェーズ 4: ヒステリシス（入る線 1.5 m、出る線 2.0 m）、幅の決めかた |
-| [08-launch.md](room-robot/08-launch.md) | フェーズ 5: launch ファイル、`setup.py` の `data_files`、ログの読みかた、Ctrl+C できれいに止める |
+| [08-launch.md](room-robot/08-launch.md) | フェーズ 5: launch ファイル、`setup.py` の `data_files`、引数、ログの読みかた、Ctrl+C できれいに止める |
 
 過去のリポジトリ（コミット書式の参考）: `~/Practice/auto-daily-report`、`~/Practice/bing検索`、`~/Practice/connect-proton`

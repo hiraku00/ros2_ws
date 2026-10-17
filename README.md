@@ -34,7 +34,7 @@ ROS 2 (Jazzy) の学習用ワークスペース。Apple Silicon の Mac 上で D
 | [05. avoider（障害物をよける頭脳）](docs/room-robot/05-avoider.md) | 前方 ±30° の最小値で、回る／進むを決める。実験の記録と、弱点（チャタリング） |
 | [06. ノイズと、最小値・平均・移動平均](docs/room-robot/06-noise-and-filter.md) | 最小値のかたより、平均の危険、移動平均（N=1/5/20）の比較。実測の数字つき |
 | [07. ヒステリシス](docs/room-robot/07-hysteresis.md) | 回り始める線（1.5 m）とやめる線（2.0 m）を分けて、ちょこちょこ回りを止める。幅の決めかた |
-| [08. launch ファイル](docs/room-robot/08-launch.md) | room_sim と avoider を、1 つのコマンドで起動・停止する。setup.py への登録、ログの読みかた |
+| [08. launch ファイル](docs/room-robot/08-launch.md) | room_sim と avoider を、1 つのコマンドで起動・停止する。setup.py への登録、引数（`noise:=1.0`）、ログの読みかた |
 
 ### その他
 
@@ -54,7 +54,7 @@ src/room_robot_pkg/room_robot_pkg/      # ステップ 2
 ├── room_sim.py   # 2D の部屋: /cmd_vel で動き、/scan（360 本）を送り、図を output/ に書き出す
 └── avoider.py    # 頭脳: /scan の前方 ±30° の最小値（過去 5 回の平均）で、1.5 m 未満なら回り始め、2.0 m（hysteresis 0.5）あくまで回る（/cmd_vel）
 src/room_robot_pkg/launch/
-└── room.launch.py  # room_sim（noise 0.5）と avoider（hysteresis 0.5）を、まとめて起動する
+└── room.launch.py  # room_sim と avoider を、まとめて起動する。引数 noise・hysteresis（既定値 0.5）
 tools/
 ├── simulate_filters.py          # ノイズ対策の効果を ROS 2 なしで数値化する（Mac で実行）
 ├── probe_brain_slow_band.py     # 本物の brain に距離を直接送り、SLOW の境界の揺れを確かめる（コンテナ内）
@@ -154,7 +154,13 @@ room_sim（ノイズ 0.5）と avoider（幅 0.5）を、1 つのタブで、ま
 ros2 launch room_robot_pkg room.launch.py
 ```
 
-設定は [launch/room.launch.py](src/room_robot_pkg/launch/room.launch.py) に書いてある（[08](docs/room-robot/08-launch.md)）。1 つずつ起動するときは、タブを分けて `ros2 run room_robot_pkg room_sim` と `ros2 run room_robot_pkg avoider`。
+設定は [launch/room.launch.py](src/room_robot_pkg/launch/room.launch.py) に書いてある（[08](docs/room-robot/08-launch.md)）。起動するときに、値を変えられる（小数点を付ける）:
+
+```bash
+ros2 launch room_robot_pkg room.launch.py noise:=1.0 hysteresis:=1.0
+```
+
+1 つずつ起動するときは、タブを分けて `ros2 run room_robot_pkg room_sim` と `ros2 run room_robot_pkg avoider`。
 
 頭脳なしで、手で動かすこともできる（Ctrl+C で止める。0.5 秒指示が途絶えると、ロボットは止まる）。
 
