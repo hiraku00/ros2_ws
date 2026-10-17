@@ -21,7 +21,7 @@ from matplotlib.patches import Circle, FancyArrowPatch, Rectangle, Wedge  # noqa
 import matplotlib.pyplot as plt  # noqa: E402
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from simulate_avoider_filters import cast_ray, run  # noqa: E402
+from simulate_avoider_filters import cast_ray, compare_hysteresis, run  # noqa: E402
 
 OUT = Path(__file__).resolve().parent.parent / 'docs' / 'room-robot' / 'images'
 
@@ -425,6 +425,81 @@ def fig_filter_compare(trials):
     return rows
 
 
+def _turn_rows(ax, trace, starts, name):
+    start = None
+    for t, _, _, turning in trace + [(60.0, 0, 0, False)]:
+        if turning and start is None:
+            start = t
+        elif not turning and start is not None:
+            ax.add_patch(Rectangle((start, 0), max(t - start, 0.12), 1, color=BLUE, lw=0))
+            start = None
+    ax.set_yticks([0, 1], ['進む', '回る'])
+    ax.set_ylim(-0.15, 1.25)
+    ax.set_xlim(25, 60)
+    for side in ('top', 'right'):
+        ax.spines[side].set_visible(False)
+    ax.text(25.3, 1.12, f'{name}　…　60 秒で「回り始めた」{starts} 回', fontsize=10, color=INK,
+            va='bottom')
+
+
+def fig_turn_timeline_hysteresis():
+    fig, axes = plt.subplots(2, 1, figsize=(9, 3.8), sharex=True)
+    for ax, (h, name) in zip(axes, ((0.0, '幅 0（出る線 1.5 m。フェーズ 3 まで）'),
+                                    (0.5, '幅 0.5（出る線 2.0 m。フェーズ 4）'))):
+        trace = []
+        _, starts, _ = run('min', 5, 0.5, 0, 60.0, trace=trace, hysteresis=h)
+        _turn_rows(ax, trace, starts, name)
+    axes[-1].set_xlabel('時間（秒）　※ 0〜25 秒は、まっすぐ進むだけなので省略')
+    fig.suptitle('ヒステリシスの幅と「回る」の回数（移動平均 N=5、ノイズ 0.5。青い柱 1 本 = 1 回の回転）',
+                 color=INK, fontsize=10.5)
+    fig.tight_layout()
+    save(fig, 'turn-timeline-hysteresis.svg')
+
+
+def fig_avoider_path_hysteresis():
+    fig, axes = plt.subplots(1, 2, figsize=(11, 5.8))
+    for ax, (h, name) in zip(axes, ((0.0, '幅 0（出る線 1.5 m）'), (0.5, '幅 0.5（出る線 2.0 m）'))):
+        trace = []
+        run('min', 5, 0.5, 0, 150.0, trace=trace, hysteresis=h)
+        draw_room(ax)
+        ax.plot([p[1] for p in trace], [p[2] for p in trace], color=BLUE, lw=2)
+        ax.plot(10, 10, 'o', color=INK, ms=7)
+        ax.text(10, 9.3, 'スタート', ha='center', va='top', color=INK, fontsize=9.5)
+        turns = [p for p, q in zip(trace[1:], trace) if p[3] and not q[3]]
+        ax.plot([p[1] for p in turns], [p[2] for p in turns], 'o', color=ORANGE, ms=7, zorder=6)
+        ax.set_title(f'{name}：150 秒で「回り始めた」{len(turns)} 回（オレンジの点）', color=INK,
+                     fontsize=10.5)
+    fig.suptitle('同じ 150 秒の道すじ（移動平均 N=5、ノイズ 0.5）', color=INK)
+    fig.tight_layout()
+    save(fig, 'avoider-path-hysteresis.svg')
+
+
+def fig_hysteresis_compare(trials):
+    rows = compare_hysteresis(trials, 60.0)
+    names = [f'幅 {r[0]}（出る線 {1.5 + r[0]:.2f} m）' for r in rows]
+    colors = [ORANGE if r[0] == 0.5 else BLUE for r in rows]
+    fig, (a1, a2) = plt.subplots(1, 2, figsize=(11, 3.2), sharey=True)
+    b1 = a1.barh(names, [r[1] for r in rows], color=colors, height=0.55)
+    for bar, r in zip(b1, rows):
+        a1.text(bar.get_width() + 0.2, bar.get_y() + bar.get_height() / 2, f'{r[1]:.1f} 回',
+                va='center', fontsize=9.5, color=INK)
+    a1.set_xlim(0, 14)
+    a1.set_xlabel('60 秒間に「回り始めた」回数（少ないほど、ゆれが少ない）')
+    a1.invert_yaxis()
+    b2 = a2.barh(names, [r[4] for r in rows], color=colors, height=0.55)
+    for bar, r in zip(b2, rows):
+        a2.text(bar.get_width() + 1.5, bar.get_y() + bar.get_height() / 2, f'{r[4]:.0f}°',
+                va='center', fontsize=9.5, color=INK)
+    a2.set_xlim(0, 100)
+    a2.set_xlabel('最初の壁で、1 回に回った角度（度）')
+    for ax in (a1, a2):
+        for side in ('top', 'right'):
+            ax.spines[side].set_visible(False)
+    fig.suptitle(f'ヒステリシスの幅をくらべる（移動平均 N=5、ノイズ 0.5、各 {trials} 回の平均）', color=INK)
+    fig.tight_layout()
+    save(fig, 'hysteresis-compare.svg')
+
+
 def print_compare(rows):
     for name, dist, starts, closest in rows:
         print(f'  {name}: 壁まで {dist:.2f} m、回数 {starts:.1f}、最近接 {closest:.2f} m')
@@ -440,6 +515,9 @@ def main():
         'twist': fig_twist, 'speed-step': fig_speed_step, 'wall-stop': fig_wall_stop,
         'avoider-path': fig_avoider_path, 'robot-width-angle': fig_robot_width_angle,
         'turn-timeline': fig_turn_timeline,
+        'turn-timeline-hysteresis': fig_turn_timeline_hysteresis,
+        'avoider-path-hysteresis': fig_avoider_path_hysteresis,
+        'hysteresis-compare': lambda: fig_hysteresis_compare(args.trials),
         'min-bias': lambda: print('最小値のずれ（1, 5, 20, 61 本）:', fig_min_bias()),
         'average-danger': lambda: print('細い柱の例の平均:', fig_average_danger()),
         'filter-compare': lambda: print_compare(fig_filter_compare(args.trials)),

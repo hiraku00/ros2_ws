@@ -10,6 +10,8 @@ from sensor_msgs.msg import LaserScan
 class Avoider(Node):
     def __init__(self):
         super().__init__('avoider')
+        self.avoiding = False                     # いま、回ってよけている最中か
+        self.declare_parameter('hysteresis', 0.5)  # 出る線を、入る線（1.5 m）からどれだけ遠くに置くか（m）
         self.history = deque(maxlen=5)
         self.pub = self.create_publisher(Twist, 'cmd_vel', 10)
         self.create_subscription(LaserScan, 'scan', self.on_scan, 10)
@@ -19,11 +21,15 @@ class Avoider(Node):
         nearest = min(front)
         self.history.append(nearest)
         dist = sum(self.history) / len(self.history)
+        hysteresis = self.get_parameter('hysteresis').value
+        threshold = 1.5 + hysteresis if self.avoiding else 1.5
         out = Twist()
-        if dist < 1.5:
+        if dist < threshold:
+            self.avoiding = True
             out.linear.x = 0.0
             out.angular.z = 0.5
         else:
+            self.avoiding = False
             out.linear.x = 0.3
             out.angular.z = 0.0
 
